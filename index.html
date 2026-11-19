@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CVForge — Free CV Builder</title>
+<style>
+:root{--orange:#f47721;--orange2:#ff9a45;--ink:#202124;--muted:#687078;--line:#e7e7e7;--panel:#fff;--bg:#f5f6f8;--soft:#fff2e8}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink);transition:.2s}body.dark{--ink:#f4f4f4;--muted:#b4bbc3;--line:#34383e;--panel:#202328;--bg:#141619;--soft:#35271e}
+header{height:68px;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 4%;position:sticky;top:0;z-index:5}
+.brand{font-size:22px;font-weight:850;letter-spacing:-.7px}.brand b{color:var(--orange)}.brand small{display:block;font-size:10px;letter-spacing:2px;color:var(--muted);font-weight:600}
+.actions{display:flex;gap:9px;align-items:center}.btn{border:0;border-radius:9px;padding:10px 15px;font-weight:700;cursor:pointer;background:var(--orange);color:white}.btn:hover{filter:brightness(.95)}.btn.secondary{background:var(--soft);color:var(--orange);border:1px solid #ffd3b4}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+main{max-width:1500px;margin:24px auto;padding:0 22px}.intro{margin-bottom:20px}.intro h1{font-size:27px;margin:0 0 6px}.intro p{margin:0;color:var(--muted)}
+.workspace{display:grid;grid-template-columns:minmax(340px, .88fr) minmax(460px,1.12fr);gap:22px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 5px 20px #11100008}.panel-head{padding:16px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.panel-head h2{font-size:16px;margin:0}.panel-body{padding:18px}.section-title{font-weight:800;font-size:13px;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin:19px 0 12px}.section-title:first-child{margin-top:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:11px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700;color:var(--muted)}input,textarea,select{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;font-size:13px;outline:none}input:focus,textarea:focus,select:focus{border-color:var(--orange);box-shadow:0 0 0 3px #f477211a}textarea{resize:vertical;min-height:75px}.repeat-item{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;position:relative}.repeat-item .remove{position:absolute;right:9px;top:8px;border:0;background:transparent;color:#e45b4d;cursor:pointer;font-size:12px}.add-btn{border:1px dashed var(--orange);background:var(--soft);color:var(--orange);border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer;font-size:12px}
+.templates{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.template{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:8px 5px;cursor:pointer;text-align:center;color:var(--ink);font-size:11px;font-weight:700}.template .swatch{height:33px;border-radius:5px;margin-bottom:6px;background:linear-gradient(90deg,var(--c) 0 28%,#f4f4f4 28%)}.template.active{border:2px solid var(--orange);padding:7px 4px;box-shadow:0 0 0 2px #f4772118}
+.preview-wrap{position:sticky;top:88px}.preview-toolbar{display:flex;align-items:center;gap:8px}.preview-toolbar select{width:auto;min-width:135px;padding:7px}.paper{background:#fff;color:#252525;width:100%;min-height:900px;box-shadow:0 5px 28px #00000018;padding:42px 44px;overflow:hidden;font-family:Arial,sans-serif;--accent:#f47721;--accent2:#333}.cv-name{font-size:29px;font-weight:800;letter-spacing:.4px;margin:0 0 5px}.cv-role{font-size:14px;color:var(--accent);font-weight:700;margin-bottom:12px}.cv-contact{font-size:10px;color:#666;line-height:1.8;border-bottom:2px solid var(--accent);padding-bottom:13px;margin-bottom:17px}.cv-section{margin:17px 0}.cv-section h3{font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent);border-bottom:1px solid #ddd;padding-bottom:6px;margin:0 0 9px}.cv-section p{font-size:11px;line-height:1.55;margin:4px 0;color:#444;white-space:pre-line}.cv-entry{margin:0 0 10px}.cv-entry strong{font-size:11px}.cv-entry em{font-size:10px;color:#777;float:right}.cv-entry p{clear:both}.skills{display:flex;flex-wrap:wrap;gap:6px}.skill{font-size:10px;background:#f2f2f2;padding:5px 8px;border-radius:4px;color:#333}.cv-layout{display:block}.paper[data-template="2"]{border-top:12px solid var(--accent)}.paper[data-template="3"]{display:grid;grid-template-columns:34% 66%;padding:0}.paper[data-template="3"] .side{background:var(--accent);color:#fff;padding:38px 20px}.paper[data-template="3"] .maincv{padding:38px 25px}.paper[data-template="3"] .cv-contact,.paper[data-template="3"] .cv-contact *{color:#fff;border-color:#ffffff88}.paper[data-template="3"] .cv-section h3{color:var(--accent);}.paper[data-template="3"] .side .cv-section h3{color:#fff;border-color:#ffffff88}.paper[data-template="3"] .side p{color:#fff}.paper[data-template="3"] .side .skill{background:#ffffff25;color:#fff}.paper[data-template="4"]{font-family:Georgia,serif}.paper[data-template="4"] .cv-name{text-align:center;font-family:Georgia,serif;font-weight:500}.paper[data-template="4"] .cv-role,.paper[data-template="4"] .cv-contact{text-align:center}.paper[data-template="5"]{border-left:13px solid var(--accent)}.paper[data-template="6"] .cv-section h3{background:var(--accent);color:white;padding:7px;border:0}.paper[data-template="7"]{font-family:Verdana,sans-serif}.paper[data-template="7"] .cv-name{color:var(--accent);font-size:25px}.paper[data-template="8"]{border:1px solid #bbb;outline:5px solid #fff;outline-offset:-12px}.paper[data-template="9"] .cv-name{font-weight:300;font-size:34px}.paper[data-template="9"] .cv-contact{border:0;background:#f3f3f3;padding:9px}.paper[data-template="10"]{background:linear-gradient(135deg,#fff 0 72%,#fff5ed 72%)}.paper[data-template="10"] .cv-section h3{border-left:4px solid var(--accent);padding-left:8px}
+.photo{width:86px;height:86px;object-fit:cover;border-radius:50%;float:right;border:3px solid var(--accent);display:none}.paper[data-template="3"] .photo{float:none;display:block;margin:0 auto 18px}.photo.show{display:block}
+.generate-area{margin-top:20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.generate-btn{padding:13px 18px;font-size:14px}.generate-area span{font-size:12px;color:#21845b;font-weight:700}.tip{font-size:11px;color:var(--muted);line-height:1.5;margin-top:12px}
+@media(max-width:1000px){.workspace{grid-template-columns:1fr}.preview-wrap{position:static}.paper{max-width:800px;margin:auto}.templates{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:560px){header{padding:0 13px}.brand{font-size:18px}.actions .btn{padding:8px 9px;font-size:11px}main{padding:0 10px}.workspace{gap:13px}.panel-body{padding:13px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.templates{grid-template-columns:repeat(3,1fr)}.paper{padding:25px 20px;min-height:700px}.paper[data-template="3"]{grid-template-columns:36% 64%;padding:0}.paper[data-template="3"] .side{padding:24px 12px}.paper[data-template="3"] .maincv{padding:24px 13px}.cv-name{font-size:23px}}
+@media print{body{background:#fff!important}.no-print,header,main>.intro,.workspace>.panel{display:none!important}main{margin:0;padding:0;max-width:none}.workspace{display:block}.preview-wrap{position:static}.preview-wrap>.panel{border:0;box-shadow:none}.preview-wrap .panel-head{display:none}.preview-wrap .panel-body{padding:0}.paper{box-shadow:none;width:100%;min-height:0;margin:0;padding:35px 40px;print-color-adjust:exact;-webkit-print-color-adjust:exact}.paper[data-template="3"]{min-height:100vh}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">CV<b>FORGE</b><small>BUILD YOUR NEXT CHAPTER</small></div>
+ <div class="actions"><button class="btn ghost" id="modeBtn">☾ Dark mode</button><button class="btn" onclick="window.print()">⬇ Download CV</button></div>
+</header>
+<main>
+ <div class="intro"><h1>Create a professional CV in minutes</h1><p>Enter your details, choose a design, and download your CV as a PDF.</p></div>
+ <div class="workspace">
+  <section class="panel">
+   <div class="panel-head"><h2>✦ CV details</h2><button class="btn secondary" id="clearBtn">Clear all</button></div>
+   <div class="panel-body">
+    <div class="section-title">Choose a template · 10 designs</div>
+    <div class="templates" id="templates"></div>
+    <div class="section-title">Personal information</div>
+    <div class="form-grid">
+     <div class="field"><label>Full name</label><input id="name" placeholder="e.g. Alex Morgan"></div>
+     <div class="field"><label>Professional title</label><input id="role" placeholder="e.g. Software Engineer"></div>
+     <div class="field"><label>Email</label><input id="email" type="email" placeholder="alex@email.com"></div>
+     <div class="field"><label>Phone</label><input id="phone" placeholder="+92 300 1234567"></div>
+     <div class="field"><label>City / Country</label><input id="location" placeholder="Larkana, Pakistan"></div>
+     <div class="field"><label>LinkedIn / Portfolio</label><input id="link" placeholder="linkedin.com/in/yourname"></div>
+     <div class="field full"><label>Profile photo (optional)</label><input id="photoInput" type="file" accept="image/*"></div>
+     <div class="field full"><label>Professional summary</label><textarea id="summary" placeholder="Write 2–4 sentences about your experience, strengths and career goals."></textarea></div>
+    </div>
+    <div class="section-title">Work experience</div>
+    <div id="experienceList"></div><button class="add-btn" onclick="addExperience()">＋ Add experience</button>
+    <div class="section-title">Education</div>
+    <div id="educationList"></div><button class="add-btn" onclick="addEducation()">＋ Add education</button>
+    <div class="section-title">Skills</div>
+    <div class="field"><label>Separate skills with commas</label><textarea id="skills" placeholder="JavaScript, Communication, Project Management"></textarea></div>
+    <div class="section-title">Additional sections</div>
+    <div class="field"><label>Certifications</label><textarea id="certifications" placeholder="Certification name — Issuing organization — Year"></textarea></div>
+    <div class="field"><label>Projects / Achievements</label><textarea id="projects" placeholder="Project or achievement — brief description"></textarea></div>
+    <div class="field"><label>Languages</label><input id="languages" placeholder="English, Urdu, Sindhi"></div>
+    <div class="generate-area"><button type="button" class="btn generate-btn" id="generateBtn">✓ Generate / Update CV Preview</button><span id="generateStatus" role="status" aria-live="polite"></span></div>
+    <p class="tip">Tip: Fill in your details, then click Generate / Update CV Preview. Your information is processed in this page; it is not uploaded to a server.</p>
+   </div>
+  </section>
+  <section class="preview-wrap">
+   <div class="panel">
+    <div class="panel-head"><h2>Live preview</h2><div class="preview-toolbar"><select id="accent"><option value="#f47721">Orange</option><option value="#2463a6">Blue</option><option value="#21845b">Green</option><option value="#773f9b">Purple</option><option value="#333333">Black</option></select><button class="btn" onclick="window.print()">Print / PDF</button></div></div>
+    <div class="panel-body" style="background:#eceef1">
+     <article class="paper" id="paper" data-template="1">
+      <div class="side" id="side"></div><div class="maincv" id="maincv">
+       <img class="photo" id="photo" alt="Profile photo">
+       <h1 class="cv-name" id="p-name">Your Name</h1><div class="cv-role" id="p-role">Your Professional Title</div>
+       <div class="cv-contact" id="p-contact">Email · Phone · Location · Portfolio</div>
+       <div id="p-summary"></div><div id="p-experience"></div><div id="p-education"></div><div id="p-skills"></div><div id="p-certifications"></div><div id="p-projects"></div><div id="p-languages"></div>
+      </div>
+     </article>
+    </div>
+   </div>
+  </section>
+ </div>
+</main>
+<script>
+const templateNames=['Classic','Modern','Sidebar','Elegant','Minimal','Bold','Corporate','Formal','Creative','Accent'];
+const templateColors=['#f47721','#252525','#e66c24','#8b6b4e','#333333','#d85c28','#245b82','#555555','#8a4c9e','#ed7628'];
+let selectedTemplate=1, photoUrl='';
+const $=id=>document.getElementById(id);
+function renderTemplates(){
+ $('templates').innerHTML=templateNames.map((n,i)=>`<button class="template ${selectedTemplate===i+1?'active':''}" data-t="${i+1}"><div class="swatch" style="--c:${templateColors[i]}"></div>${i+1}. ${n}</button>`).join('');
+ document.querySelectorAll('.template').forEach(b=>b.addEventListener('click',()=>{selectedTemplate=+b.dataset.t;renderTemplates();renderCV()}));
+}
+function addExperience(data={}){const d=document.createElement('div');d.className='repeat-item';d.innerHTML=`<button class="remove" type="button" onclick="this.parentElement.remove()">Remove ✕</button><div class="form-grid"><div class="field"><label>Job title</label><input class="job" placeholder="Job title" value="${esc(data.job||'')}"></div><div class="field"><label>Company</label><input class="company" placeholder="Company name" value="${esc(data.company||'')}"></div><div class="field"><label>Dates</label><input class="dates" placeholder="2022 – Present" value="${esc(data.dates||'')}"></div><div class="field"><label>Location</label><input class="place" placeholder="City" value="${esc(data.place||'')}"></div><div class="field full"><label>Responsibilities / achievements</label><textarea class="details" placeholder="Describe your work and results">${esc(data.details||'')}</textarea></div></div>`;$('experienceList').appendChild(d)}
+function addEducation(data={}){const d=document.createElement('div');d.className='repeat-item';d.innerHTML=`<button class="remove" type="button" onclick="this.parentElement.remove()">Remove ✕</button><div class="form-grid"><div class="field"><label>Degree / qualification</label><input class="degree" placeholder="BS Computer Science" value="${esc(data.degree||'')}"></div><div class="field"><label>Institute</label><input class="institute" placeholder="University / College" value="${esc(data.institute||'')}"></div><div class="field"><label>Year</label><input class="year" placeholder="2021 – 2025" value="${esc(data.year||'')}"></div><div class="field"><label>Grade (optional)</label><input class="grade" placeholder="CGPA / Grade" value="${esc(data.grade||'')}"></div></div>`;$('educationList').appendChild(d)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function val(id){return $(id).value.trim()}
+function section(title,content){return content?`<section class="cv-section"><h3>${title}</h3>${content}</section>`:''}
+function renderCV(){
+ const paper=$('paper');paper.dataset.template=selectedTemplate;paper.style.setProperty('--accent',$('accent').value);
+ const name=val('name')||'Your Name',role=val('role')||'Your Professional Title';
+ const contact=[val('email'),val('phone'),val('location'),val('link')].filter(Boolean).join('  |  ')||'Email · Phone · Location · Portfolio';
+ const exp=[...$('experienceList').children].map(d=>{let v=c=>d.querySelector('.'+c).value.trim();let head=[v('job'),v('company')].filter(Boolean).join(' — ');return head?`<div class="cv-entry"><strong>${esc(head)}</strong><em>${esc([v('dates'),v('place')].filter(Boolean).join(' · '))}</em><p>${esc(v('details'))}</p></div>`:''}).join('');
+ const edu=[...$('educationList').children].map(d=>{let v=c=>d.querySelector('.'+c).value.trim();let head=[v('degree'),v('institute')].filter(Boolean).join(' — ');return head?`<div class="cv-entry"><strong>${esc(head)}</strong><em>${esc([v('year'),v('grade')].filter(Boolean).join(' · '))}</em></div>`:''}).join('');
+ const skills=val('skills').split(',').map(s=>s.trim()).filter(Boolean).map(s=>`<span class="skill">${esc(s)}</span>`).join('');
+ const summary=section('Profile',`<p>${esc(val('summary'))}</p>`);
+ const experience=section('Experience',exp),education=section('Education',edu),skillSection=section('Key skills',`<div class="skills">${skills}</div>`);
+ const cert=section('Certifications',`<p>${esc(val('certifications'))}</p>`),projects=section('Projects & achievements',`<p>${esc(val('projects'))}</p>`),langs=section('Languages',`<p>${esc(val('languages'))}</p>`);
+ if(selectedTemplate===3){
+  $('side').innerHTML=`<img class="photo ${photoUrl?'show':''}" src="${photoUrl}" alt="Profile photo">${section('Contact',`<p>${esc(val('email'))}<br>${esc(val('phone'))}<br>${esc(val('location'))}<br>${esc(val('link'))}</p>`)}${skillSection}${langs}`;
+  $('maincv').innerHTML=`<h1 class="cv-name">${esc(name)}</h1><div class="cv-role">${esc(role)}</div>${summary}${experience}${education}${cert}${projects}`;
+ }else{
+  $('side').innerHTML='';$('maincv').innerHTML=`<img class="photo ${photoUrl?'show':''}" src="${photoUrl}" alt="Profile photo"><h1 class="cv-name">${esc(name)}</h1><div class="cv-role">${esc(role)}</div><div class="cv-contact">${esc(contact)}</div>${summary}${experience}${education}${skillSection}${cert}${projects}${langs}`;
+ }
+}
+// The preview is refreshed when the user presses the Generate / Update button.
+$('generateBtn').addEventListener('click',()=>{renderCV();$('generateStatus').textContent='CV preview updated successfully.';$('paper').scrollIntoView({behavior:'smooth',block:'start'});});
+$('accent').addEventListener('change',renderCV);
+$('photoInput').addEventListener('change',e=>{const f=e.target.files[0];if(f){if(photoUrl)URL.revokeObjectURL(photoUrl);photoUrl=URL.createObjectURL(f);renderCV()}});
+$('modeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');$('modeBtn').textContent=document.body.classList.contains('dark')?'☀ Light mode':'☾ Dark mode'});
+$('clearBtn').addEventListener('click',()=>{if(!confirm('Clear all CV information?'))return;document.querySelectorAll('input:not([type=file]),textarea').forEach(x=>x.value='');$('photoInput').value='';$('experienceList').innerHTML='';$('educationList').innerHTML='';if(photoUrl)URL.revokeObjectURL(photoUrl);photoUrl='';renderCV();$('generateStatus').textContent='All fields cleared.'});
+renderTemplates();addExperience();addEducation();renderCV();
+window.addEventListener('pageshow', renderCV);
+</script>
+</body>
+</html>
